@@ -1,11 +1,9 @@
 package vn.edu.stu.doangk_qlsach;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,26 +11,25 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 import vn.edu.stu.doangk_qlsach.adapter.CategoryAdapter;
+import vn.edu.stu.doangk_qlsach.dao.CateDAO;
+import vn.edu.stu.doangk_qlsach.helper.DBHelper;
 import vn.edu.stu.doangk_qlsach.model.Category;
 
 public class CategoryManagement extends AppCompatActivity {
-    public static final String DB_NAME = "dbsach.sqlite";
-    public static final String DB_PATH_SUFFIX = "/databases/";
-
     ListView lvCategory;
     CategoryAdapter adapterCategory;
     Button btnSave;
     TextInputEditText edtCateId, edtCateName;
+    CateDAO cateDAO;
+    DBHelper dbHelper;
+
+    private boolean isEditing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,83 +41,74 @@ public class CategoryManagement extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-		
-		copyDBFromAssets();
+
         addControls();
         addEvents();
         loadDsSvFromDb();
     }
-	
-	private void loadDsSvFromDb() {
-        SQLiteDatabase database = openOrCreateDatabase(
-                DB_NAME,
-                MODE_PRIVATE,
-                null
-        );
 
-        Cursor cursor = database.rawQuery("Select * From Category", null);
+    private void loadDsSvFromDb() {
         adapterCategory.clear();
-
-        while (cursor.moveToNext()) {
-            int id = cursor.getInt(0);
-            String name = cursor.getString(1);
-			Category category = new Category(id, name);
-            adapterCategory.add(category);
-        }
-        cursor.close();
-        database.close();
+        adapterCategory.addAll(cateDAO.getAllCategories());
         adapterCategory.notifyDataSetChanged();
     }
 
     private void addEvents() {
         btnSave.setOnClickListener(view -> {
-            String name = edtCateName.getText().toString();
+            if (isEditing) {
+                Category c = new Category(
+                        Integer.parseInt(edtCateId.getText().toString()),
+                        edtCateName.getText().toString()
+                );
+                int updated = cateDAO.update(c);
+                if (updated > 0) {
+                    loadDsSvFromDb();
+                    Toast.makeText(this, "Sửa thành công item "+c.getId(), Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Sửa thất bại", Toast.LENGTH_LONG).show();
+                }
+                isEditing=true;
+            } else {
+                // adding
+                String name = edtCateName.getText().toString();
+                boolean isAdded = cateDAO.insert(new Category(name));
+                if (isAdded) {
+                    loadDsSvFromDb();
+                    resetForm();
+                } else {
+                    edtCateName.setError("Failed to add category");
+                }
+            }
+        });
 
-            SQLiteDatabase database = openOrCreateDatabase(
-                    DB_NAME,
-                    MODE_PRIVATE,
-                    null
-            );
-            String sql = "Insert into Category (Name) values (?)";
-            Object[] args = new Object[]{name};
-            database.execSQL(sql, args);
-            database.close();
-            resetForm();
-            loadDsSvFromDb();
+        lvCategory.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(CategoryManagement.this);
+            builder.setTitle("What do you want?");
+            builder.setMessage("Choose an action to perform on this category.");
+            builder.setPositiveButton("Delete", (dialogInterface, j) -> {
+                boolean isDeleted = cateDAO.delete(String.valueOf(adapterCategory.getItem(i).getId()));
+                if (isDeleted) {
+                    loadDsSvFromDb();
+                    Toast.makeText(this, "Xóa thành công", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, "Xóa thất bại", Toast.LENGTH_LONG).show();
+                }
+            });
+            builder.setNeutralButton("Cancel", (dialogInterface, j) -> {});
+            builder.setNegativeButton("Update", (dialogInterface, j) -> {
+                edtCateId.setText(String.valueOf(adapterCategory.getItem(i).getId()));
+                edtCateName.setText(adapterCategory.getItem(i).getName());
+                isEditing=true;
+                btnSave.setText("Update");
+            });
+            builder.show();
+            return true;
         });
     }
 
     private void resetForm() {
         edtCateId.setText("");
         edtCateName.setText("");
-    }
-
-    private void copyDBFromAssets() {
-        File dbfile = getDatabasePath(DB_NAME);
-        if (!dbfile.exists()) {
-            File dbDir = new File(getApplicationInfo().dataDir + DB_PATH_SUFFIX);
-            if (!dbDir.exists()) {
-                dbDir.mkdir();
-            }
-            try {
-                InputStream is = getAssets().open(DB_NAME); // open file DB
-                String outputFilePath = getApplicationInfo().dataDir + DB_PATH_SUFFIX + DB_NAME;
-                OutputStream os = new FileOutputStream(outputFilePath);
-                byte[] buffer = new byte[1024]; // mảng nhị phan để chép
-                int length; // nếu 1028 -> lấy ra 1024 dư 4 --> lưu vào length
-
-                while ((length = is.read(buffer)) > 0) {
-                    os.write(buffer, 0, length);
-                }
-
-                os.flush();
-                os.close();
-                is.close();
-
-            } catch (IOException e) {
-                Log.e("LOI", e.toString());
-            }
-        }
     }
 
     private void addControls() {
@@ -134,6 +122,9 @@ public class CategoryManagement extends AppCompatActivity {
                 new ArrayList<>()
         );
         lvCategory.setAdapter(adapterCategory);
+        cateDAO = new CateDAO(CategoryManagement.this);
+        dbHelper = new DBHelper();
+        dbHelper.copyDBFromAssets(this);
     }
 
 }
