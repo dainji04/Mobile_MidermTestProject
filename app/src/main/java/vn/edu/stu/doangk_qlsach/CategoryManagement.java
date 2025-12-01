@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -13,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,6 +32,7 @@ public class CategoryManagement extends AppCompatActivity {
     ListView lvCategory;
     CategoryAdapter adapterCategory;
     Button btnSave;
+    TextInputEditText edtCateId, edtCateName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,26 @@ public class CategoryManagement extends AppCompatActivity {
     }
 
     private void addEvents() {
+        btnSave.setOnClickListener(view -> {
+            String name = edtCateName.getText().toString();
 
+            SQLiteDatabase database = openOrCreateDatabase(
+                    DB_NAME,
+                    MODE_PRIVATE,
+                    null
+            );
+            String sql = "Insert into Category (Name) values (?)";
+            Object[] args = new Object[]{name};
+            database.execSQL(sql, args);
+            database.close();
+            resetForm();
+            loadDsSvFromDb();
+        });
+    }
+
+    private void resetForm() {
+        edtCateId.setText("");
+        edtCateName.setText("");
     }
 
     private void copyDBFromAssets() {
@@ -105,6 +126,8 @@ public class CategoryManagement extends AppCompatActivity {
     private void addControls() {
         lvCategory = findViewById(R.id.lvCategory);
         btnSave = findViewById(R.id.btnSave);
+        edtCateId = findViewById(R.id.edtCateId);
+        edtCateName = findViewById(R.id.edtCateName);
         adapterCategory = new CategoryAdapter(
                 CategoryManagement.this,
                 R.layout.item_category,
@@ -112,4 +135,5 @@ public class CategoryManagement extends AppCompatActivity {
         );
         lvCategory.setAdapter(adapterCategory);
     }
+
 }
