@@ -1,0 +1,89 @@
+<resources>
+    <!-- App Name -->
+    <string name="app_name">Quản Lý Nhà Sách</string>
+
+    <!-- Common -->
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
+    <string name="save">Lưu</string>
+    <string name="exit">Thoát</string>
+    <string name="clear">Xóa trắng</string>
+    <string name="delete">Xóa</string>
+    <string name="edit">Sửa</string>
+    <string name="add">Thêm</string>
+    <string name="cancel">Hủy</string>
+    <string name="ok">Đồng ý</string>
+
+    <!-- Login Activity -->
+    <string name="book_store_management">Quản Lý Nhà Sách</string>
+    <string name="username">Tên đăng nhập</string>
+    <string name="password">Mật khẩu</string>
+    <string name="login">Đăng nhập</string>
+    <string name="login_failed">Sai tên đăng nhập hoặc mật khẩu</string>
+    <string name="please_fill_all_fields">Vui lòng điền đầy đủ thông tin</string>
+
+    <!-- Category Management Activity -->
+    <string name="category_management">QUẢN LÝ THỂ LOẠI</string>
+    <string name="category_id">Mã thể loại</string>
+    <string name="category_name">Tên thể loại</string>
+    <string name="category_id_format">Mã thể loại: %d</string>
+    <string name="category_added_successfully">Thêm thể loại thành công</string>
+    <string name="category_updated_successfully">Cập nhật thể loại thành công</string>
+    <string name="category_deleted_successfully">Xóa thể loại thành công</string>
+    <string name="cannot_delete_category_has_books">Không thể xóa thể loại đã có sách</string>
+    <string name="confirm_delete">Xác nhận xóa</string>
+    <string name="are_you_sure_delete_category">Bạn có chắc chắn muốn xóa thể loại này?</string>
+
+    <!-- Book List Activity -->
+    <string name="book_management">QUẢN LÝ SÁCH</string>
+    <string name="add_book">Thêm sách</string>
+    <string name="book_id_format">Mã: %d</string>
+    <string name="category_format">Thể loại: %s</string>
+    <string name="book_image">Hình ảnh sách</string>
+    <string name="are_you_sure_delete_book">Bạn có chắc chắn muốn xóa cuốn sách này?</string>
+    <string name="book_deleted_successfully">Xóa sách thành công</string>
+
+    <!-- Book Form Activity -->
+    <string name="add_book_title">Thêm sách mới</string>
+    <string name="edit_book">Chỉnh sửa sách</string>
+    <string name="book_id">Mã sách</string>
+    <string name="book_title">Tên sách</string>
+    <string name="author">Tác giả</string>
+    <string name="publish_year">Năm xuất bản</string>
+    <string name="category">Thể loại</string>
+    <string name="choose_image">Chọn hình ảnh</string>
+    <string name="book_added_successfully">Thêm sách thành công</string>
+    <string name="book_updated_successfully">Cập nhật sách thành công</string>
+    <string name="error_occurred">Đã xảy ra lỗi</string>
+    <string name="invalid_year">Năm không hợp lệ</string>
+    <string name="please_select_category">Vui lòng chọn thể loại</string>
+
+    <!-- About Activity -->
+    <string name="about">Giới thiệu</string>
+    <string name="about_title">Thông tin sinh viên</string>
+    <string name="student_name_label">Họ và tên:</string>
+    <string name="student_name">Nguyễn Văn A</string>
+    <string name="student_id_label">Mã sinh viên:</string>
+    <string name="student_id">DH12345678</string>
+    <string name="class_label">Lớp:</string>
+    <string name="class_name">DH19CS01</string>
+    <string name="email_label">Email:</string>
+    <string name="student_email">student@stu.edu.vn</string>
+    <string name="phone_label">Điện thoại:</string>
+    <string name="student_phone">0123456789</string>
+    <string name="university_location">Vị trí trường</string>
+    <string name="stu_name">Trường Đại học Công nghệ Sài Gòn (STU)</string>
+    <string name="stu_address">180 Cao Lỗ, Phường 4, Quận 8, TP.  Hồ Chí Minh</string>
+    <string name="cannot_open_dialer">Không thể mở ứng dụng gọi điện</string>
+    <string name="name">Tên</string>
+    <string name="phone">Điện thoại</string>
+    <string name="email">Email</string>
+
+    <!-- Menu -->
+    <string name="menu_categories">Thể loại</string>
+    <string name="menu_books">Sách</string>
+    <string name="menu_about">Giới thiệu</string>
+    <string name="menu_logout">Đăng xuất</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="are_you_sure_logout">Bạn có chắc chắn muốn đăng xuất?</string>
+</resources>

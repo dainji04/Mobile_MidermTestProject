@@ -34,8 +34,14 @@ public class Login extends AppCompatActivity {
 
     private void addEvents() {
         btnLogin.setOnClickListener(view -> {
-            Intent intent = new Intent(Login.this, Home.class);
-            startActivity(intent);
+            if (tilUsername.getEditText().getText().toString().equals("admin") &&
+                tilPwd.getEditText().getText().toString().equals("123")) {
+                Intent intent = new Intent(Login.this, CategoryManagement.class);
+                startActivity(intent);
+            } else {
+                tilUsername.setError("Invalid username or password");
+                tilPwd.setError("Invalid username or password");
+            }
         });
     }
 
