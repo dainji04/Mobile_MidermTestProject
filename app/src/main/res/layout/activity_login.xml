@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvTitle"
         android:layout_gravity="center"
-        android:text="Hello there, welcome back"
+        android:text="@string/login_title"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
@@ -32,10 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tvSubtitle"
-        android:text="sign in to continue"
+        android:text="@string/login_subtitle"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:textSize="18dp"
+        android:textSize="18sp"
         />
 
     <LinearLayout
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tilUsername"
-            android:hint="Username"
+            android:hint="@string/username"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox" >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -65,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/tilPwd"
-            android:hint="Password"
+            android:hint="@string/password"
             app:passwordToggleEnabled="true"
             style="@style/ThemeOverlay.Material3.AutoCompleteTextView.OutlinedBox" >
 
@@ -80,7 +80,7 @@
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Login"
+            android:text="@string/login"
             android:id="@+id/btnLogin"
             android:checkable="true"
             android:checked="true"
@@ -88,7 +88,7 @@
             android:textSize="12pt"
             android:layout_marginTop="10dp"
             style="@style/Widget.Material3.Button.ElevatedButton"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"/>
 
     </LinearLayout>
 

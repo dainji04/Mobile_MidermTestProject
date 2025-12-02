@@ -1,98 +1,69 @@
 package vn.edu.stu.doangk_qlsach.adapter;
 
+import android.app.Activity;
 import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import vn.edu.stu.doangk_qlsach.R;
+import vn.edu.stu.doangk_qlsach.dao.CateDAO;
 import vn.edu.stu.doangk_qlsach.model.Book;
+import vn.edu.stu.doangk_qlsach.model.Category;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class BookAdapter extends RecyclerView. Adapter<BookAdapter.ViewHolder> {
+public class BookAdapter extends ArrayAdapter<Book> {
+    Activity context;
+    int resource;
+    List<Book> objects;
+    private List<Category> categoryList;
 
-    private List<Book> books;
-    private OnBookListener listener;
-
-    public interface OnBookListener {
-        void onBookClick(Book book);
-        void onBookLongClick(Book book);
-    }
-
-    public BookAdapter(List<Book> books, OnBookListener listener) {
-        this.books = books;
-        this.listener = listener;
+    public BookAdapter(Activity context, int resource, List<Book> objects) {
+        super(context, resource, objects);
+        this.context = context;
+        this.resource = resource;
+        this.objects = objects;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_book, parent, false);
-        return new ViewHolder(view);
-    }
+    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        LayoutInflater inflater = this.context.getLayoutInflater();
+        View item = inflater.inflate(this.resource, null);
 
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Book book = books.get(position);
-        holder.bind(book);
-    }
-
-    @Override
-    public int getItemCount() {
-        return books.size();
-    }
-
-    public void updateData(List<Book> newBooks) {
-        this.books = newBooks;
-        notifyDataSetChanged();
-    }
-
-    class ViewHolder extends RecyclerView. ViewHolder {
-        ImageView imageBook;
-        TextView textBookId, textBookTitle, textBookCategory;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            imageBook = itemView.findViewById(R. id.image_book);
-            textBookId = itemView.findViewById(R.id.text_book_id);
-            textBookTitle = itemView.findViewById(R. id.text_book_title);
-            textBookCategory = itemView.findViewById(R.id.text_book_category);
+        if (categoryList == null) {
+            categoryList = new ArrayList<>();
         }
+        CateDAO cateDAO = new CateDAO(context);
+        categoryList = cateDAO.getAllCategories();
 
-        void bind(Book book) {
-            textBookId.setText(itemView.getContext().getString(R.string.book_id_format, book.getId()));
-            textBookTitle.setText(book. getTitle());
-            textBookCategory.setText(itemView.getContext().getString(R.string.category_format, "Category name"));
+        ImageView image_book = item.findViewById(R.id.image_book);
+        TextView tvbookId = item.findViewById(R.id.tvBookId);
+        TextView tvBookTitle = item.findViewById(R.id.tvBookTitle);
+        TextView tvBookCategory = item.findViewById(R.id.tvBookCategory);
 
-            // Load image
-            if (book.getImagePath() != null && !book.getImagePath().isEmpty()) {
-                try {
-                    imageBook.setImageURI(Uri.parse(book.getImagePath()));
-                } catch (Exception e) {
-                    imageBook. setImageResource(R.drawable. ic_book_placeholder);
-                }
-            } else {
-                imageBook.setImageResource(R.drawable.ic_book_placeholder);
+        Book b = this.objects.get(position);
+        image_book.setImageURI(Uri.parse(b.getImagePath()));
+        tvbookId.setText("Id: " + b.getId());
+        tvBookTitle.setText(b.getTitle());
+        Category c = new Category();
+
+        for (Category category : categoryList) {
+            if (category.getId() == b.getCategoryId()) {
+                c = category;
+                break;
             }
-
-            // Click to edit
-            itemView.setOnClickListener(v -> {
-                if (listener != null) {
-                    listener.onBookClick(book);
-                }
-            });
-
-            // Long click to delete
-            itemView.setOnLongClickListener(v -> {
-                if (listener != null) {
-                    listener.onBookLongClick(book);
-                }
-                return true;
-            });
         }
+
+        tvBookCategory.setText("Category: " + c.getName());
+
+        return item;
     }
 }

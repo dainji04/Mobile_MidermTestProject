@@ -7,6 +7,14 @@
     android:id="@+id/main"
     android:background="@color/background_color">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/topAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/maroon"
+        app:title="@string/app_name"
+        app:titleTextColor="#FFFFFF" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

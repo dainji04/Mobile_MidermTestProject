@@ -1,13 +1,14 @@
 <resources>
     <!-- App Name -->
-    <string name="app_name">Quản Lý Nhà Sách</string>
+    <string name="app_name">Quản Lý Sách</string>
+    <string name="app_title">Quản lý sách Dainji</string>
 
     <!-- Common -->
     <string name="yes">Có</string>
     <string name="no">Không</string>
     <string name="save">Lưu</string>
     <string name="exit">Thoát</string>
-    <string name="clear">Xóa trắng</string>
+    <string name="clear">Xóa</string>
     <string name="delete">Xóa</string>
     <string name="edit">Sửa</string>
     <string name="add">Thêm</string>
@@ -15,7 +16,8 @@
     <string name="ok">Đồng ý</string>
 
     <!-- Login Activity -->
-    <string name="book_store_management">Quản Lý Nhà Sách</string>
+    <string name="login_title">Chào mừng bạn trở lại</string>
+    <string name="login_subtitle">Đăng nhập để tiếp tục</string>
     <string name="username">Tên đăng nhập</string>
     <string name="password">Mật khẩu</string>
     <string name="login">Đăng nhập</string>
@@ -62,15 +64,15 @@
     <string name="about">Giới thiệu</string>
     <string name="about_title">Thông tin sinh viên</string>
     <string name="student_name_label">Họ và tên:</string>
-    <string name="student_name">Nguyễn Văn A</string>
+    <string name="student_name">Nguyễn Cường Đại</string>
     <string name="student_id_label">Mã sinh viên:</string>
-    <string name="student_id">DH12345678</string>
+    <string name="student_id">DH52200431</string>
     <string name="class_label">Lớp:</string>
-    <string name="class_name">DH19CS01</string>
+    <string name="class_name">D22_TH08</string>
     <string name="email_label">Email:</string>
-    <string name="student_email">student@stu.edu.vn</string>
+    <string name="student_email">dh52200431@student.stu.edu.vn</string>
     <string name="phone_label">Điện thoại:</string>
-    <string name="student_phone">0123456789</string>
+    <string name="student_phone">0907165254</string>
     <string name="university_location">Vị trí trường</string>
     <string name="stu_name">Trường Đại học Công nghệ Sài Gòn (STU)</string>
     <string name="stu_address">180 Cao Lỗ, Phường 4, Quận 8, TP.  Hồ Chí Minh</string>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/main"
     android:background="@color/background_color">
 
     <LinearLayout
@@ -10,6 +11,14 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="16dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/maroon"
+            app:title="@string/app_name"
+            app:titleTextColor="#FFFFFF" />
 
         <!-- Image Section -->
         <androidx.cardview.widget.CardView
@@ -20,7 +29,7 @@
             app:cardElevation="4dp">
 
             <ImageView
-                android:id="@+id/image_book_preview"
+                android:id="@+id/imgBook"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
@@ -30,7 +39,7 @@
         </androidx.cardview.widget.CardView>
 
         <Button
-            android:id="@+id/btn_choose_image"
+            android:id="@+id/btnChooseImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/choose_image"
@@ -60,7 +69,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_book_id"
+                        android:id="@+id/edtBookId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"
@@ -76,7 +85,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_book_title"
+                        android:id="@+id/edtBookTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"/>
@@ -91,7 +100,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_book_author"
+                        android:id="@+id/edtBookAuthor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"/>
@@ -106,7 +115,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/edit_book_year"
+                        android:id="@+id/edtBookYear"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="number"/>
@@ -139,7 +148,7 @@
                     android:gravity="center">
 
                     <Button
-                        android:id="@+id/btn_exit"
+                        android:id="@+id/btnExit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -148,7 +157,7 @@
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
 
                     <Button
-                        android:id="@+id/btn_save"
+                        android:id="@+id/btnSave"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

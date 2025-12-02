@@ -2,6 +2,8 @@ package vn.edu.stu.doangk_qlsach;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,7 +31,6 @@ public class Login extends AppCompatActivity {
 
         addControls();
         addEvents();
-
     }
 
     private void addEvents() {

@@ -1,9 +1,13 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.DoAnGK_QLSach" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<resources>
+    <style name="Theme.doAnGK_QLSach" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Hoặc Theme.MaterialComponents.Light.NoActionBar -->
+
+        <!-- Style cho menu popup -->
+        <item name="popupMenuStyle">@style/CustomPopupMenuStyle</item>
+        <item name="actionOverflowMenuStyle">@style/CustomPopupMenuStyle</item>
     </style>
 
-    <style name="Theme.DoAnGK_QLSach" parent="Base.Theme.DoAnGK_QLSach" />
+    <style name="CustomPopupMenuStyle" parent="Widget.Material3.PopupMenu">
+        <item name="android:popupBackground">@android:color/white</item>
+    </style>
 </resources>
