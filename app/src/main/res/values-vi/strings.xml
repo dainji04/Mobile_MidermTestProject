@@ -86,6 +86,14 @@
     <string name="menu_books">Sách</string>
     <string name="menu_about">Giới thiệu</string>
     <string name="menu_logout">Đăng xuất</string>
-    <string name="logout">Đăng xuất</string>
     <string name="are_you_sure_logout">Bạn có chắc chắn muốn đăng xuất?</string>
+
+    <!-- Phone Actions -->
+    <string name="dial">Quay số</string>
+    <string name="call">Gọi</string>
+    <string name="permission_required">Cần quyền truy cập</string>
+    <string name="call_permission_denied">Cần quyền gọi điện. Bạn có muốn mở máy quay số không?</string>
+    <string name="cannot_make_call">Không thể gọi điện</string>
+    <string name="open_dialer">Mở máy quay số</string>
+
 </resources>
