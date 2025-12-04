@@ -1,7 +1,9 @@
 package vn.edu.stu.doangk_qlsach;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -53,7 +56,7 @@ import vn.edu.stu.doangk_qlsach.helper.MenuHelper;
             btnDial.setOnClickListener(v -> openDialer(phoneNumber));
 
             // Button Call - Gọi trực tiếp
-            btnCall.setOnClickListener(v -> makePhoneCall(phoneNumber));
+            btnCall.setOnClickListener(v -> checkPermissionAndCall());
         }
 
         private void openDialer(String phoneNumber) {
@@ -67,22 +70,28 @@ import vn.edu.stu.doangk_qlsach.helper.MenuHelper;
             }
         }
 
-        private void makePhoneCall(String phoneNumber) {
-            Intent intent = new Intent(Intent.ACTION_CALL);
-            intent.setData(Uri.parse("tel:" + phoneNumber));
-
+        private void checkPermissionAndCall() {
             try {
+                if (ActivityCompat.checkSelfPermission(
+                        About.this,
+                        Manifest.permission.CALL_PHONE
+                ) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            About.this,
+                            new String[]{Manifest.permission.CALL_PHONE},
+                            100
+                    );
+                }
+
+                String phone = "0907165254";
+                Intent intent = new Intent(
+                        Intent.ACTION_CALL,
+                        Uri.parse("tel:"+phone)
+                );
+
                 startActivity(intent);
-            } catch (SecurityException e) {
-                // Nếu không có permission, hiện thông báo và fallback về DIAL
-                new AlertDialog.Builder(this)
-                        .setTitle(R.string.permission_required)
-                        .setMessage(R.string.call_permission_denied)
-                        .setPositiveButton(R.string.open_dialer, (dialog, which) -> openDialer(phoneNumber))
-                        .setNegativeButton(R.string.cancel, null)
-                        .show();
             } catch (Exception e) {
-                Toast.makeText(this, R.string.cannot_make_call, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
             }
         }
 
@@ -134,4 +143,14 @@ import vn.edu.stu.doangk_qlsach.helper.MenuHelper;
             mMap. getUiSettings().setZoomControlsEnabled(true);
             mMap.getUiSettings(). setZoomGesturesEnabled(true);
         }
-}
+
+        @Override
+        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+            if (requestCode == 100) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    checkPermissionAndCall();
+                }
+            }
+        }
+    }
